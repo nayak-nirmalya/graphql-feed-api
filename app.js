@@ -5,11 +5,8 @@ const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 const multer = require('multer')
 
-const feedRoutes = require('./routes/feed')
-const authRoutes = require('./routes/auth')
-
 const MONGODB_URI =
-  'mongodb+srv://nirmalya:nirmalya@cluster.a9tjk7u.mongodb.net/blog'
+  'mongodb+srv://nirmalya:nirmalya@cluster.a9tjk7u.mongodb.net/blog-graphql'
 
 const app = express()
 
@@ -54,9 +51,6 @@ app.use((req, res, next) => {
   next()
 })
 
-app.use('/feed', feedRoutes)
-app.use('/auth', authRoutes)
-
 app.use((error, req, res, next) => {
   console.log(error)
   const status = error.statusCode || 500
@@ -73,11 +67,7 @@ mongoose.set('strictQuery', true)
 mongoose
   .connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then((result) => {
-    const server = app.listen(8080)
-    const io = require('./socket').init(server)
-    io.on('connection', (socket) => {
-      console.log('Client Connected!')
-    })
+    app.listen(8080)
   })
   .catch((err) => {
     console.error(err)
