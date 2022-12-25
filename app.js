@@ -121,6 +121,6 @@ mongoose
   })
 
 const clearImage = (filePath) => {
-  filePath = path.join(__dirname, '..', 'images', filePath)
+  filePath = path.join(__dirname, 'images', filePath)
   fs.unlink(filePath, (err) => console.error('Deleted!'))
 }
