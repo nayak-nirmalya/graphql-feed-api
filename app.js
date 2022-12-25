@@ -1,5 +1,4 @@
 const path = require('path')
-const fs = require('fs')
 
 const express = require('express')
 const bodyParser = require('body-parser')
@@ -10,6 +9,7 @@ const { graphqlHTTP } = require('express-graphql')
 const graphqlSchema = require('./graphql/schema')
 const graphqlResolver = require('./graphql/resolvers')
 const auth = require('./middleware/auth')
+const { clearImage } = require('./util/file')
 
 const MONGODB_URI =
   'mongodb+srv://nirmalya:nirmalya@cluster.a9tjk7u.mongodb.net/blog-graphql'
@@ -119,8 +119,3 @@ mongoose
   .catch((err) => {
     console.error(err)
   })
-
-const clearImage = (filePath) => {
-  filePath = path.join(__dirname, 'images', filePath)
-  fs.unlink(filePath, (err) => console.error('Deleted!'))
-}
