@@ -150,4 +150,19 @@ module.exports = {
       totalPosts: totalPosts,
     }
   },
+
+  post: async function ({ id }, req) {
+    if (!req.isAuth) {
+      const error = new Error('Not Authenticated!')
+      error.code = 401
+      throw error
+    }
+    const post = await Post.findById(id).populate('creator')
+    return {
+      ...post._doc,
+      _id: post._id.toString(),
+      createdAt: post.createdAt.toISOString(),
+      updatedAt: post.updatedAt.toISOString(),
+    }
+  },
 }
