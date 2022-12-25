@@ -133,7 +133,7 @@ module.exports = {
     return {
       posts: posts.map((post) => {
         return {
-          ...post,
+          ...post._doc,
           _id: post._id.toString(),
           createdAt: post.createdAt.toISOString(),
           updatedAt: post.updatedAt.toISOString(),
